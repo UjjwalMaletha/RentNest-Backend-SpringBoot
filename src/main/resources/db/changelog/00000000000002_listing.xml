@@ -1,0 +1,79 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="00000000000002-listing" author="codecake">
+        <createTable tableName="listing">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="public_id" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="title" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="guests" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bedrooms" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="beds" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bathrooms" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="landlord_public_id" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_modified_date" type="DATETIME"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="landlord_public_id" baseTableName="listing"
+                                 constraintName="fk_landlord_id" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="public_id"
+                                 referencedTableName="airbnb_user" validate="true"/>
+    </changeSet>
+
+    <changeSet id="00000000000002-picture" author="codecake">
+        <createTable tableName="listing_picture">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="listing_fk" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_cover" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_modified_date" type="DATETIME"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="listing_fk" baseTableName="listing_picture"
+                                 constraintName="fk_listing_id" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="listing"
+                                 validate="true"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

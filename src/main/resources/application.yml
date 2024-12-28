@@ -1,0 +1,51 @@
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    com.ujjwalmaletha.arbnbbackend: DEBUG
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: arbnbbackend
+  datasource:
+    url: jdbc:mysql://localhost:3306/airbnb_clone?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Ujjwal
+
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+  liquibase:
+    contexts: dev
+    change-log: classpath:db/changelog/master.xml
+    default-schema: airbnb_clone
+    enabled: true
+  #    drop-first: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+server:
+  port: 8080
+
+okta:
+  oauth2:
+    issuer: https://dev-6f3vy7sf26wpcync.us.auth0.com/
+    client-id: ${AUTH0_CLIENT_ID}
+    client-secret: ${AUTH0_CLIENT_SECRET}
+
+application:
+  auth0:
+    role-landlord-id: rol_HTo2RjZ517X52Li0
