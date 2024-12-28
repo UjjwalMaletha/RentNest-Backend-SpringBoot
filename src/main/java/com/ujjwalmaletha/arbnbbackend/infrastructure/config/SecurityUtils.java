@@ -18,7 +18,7 @@ public class SecurityUtils {
     public static final String ROLE_LANDLORD = "ROLE_LANDLORD";
     public static final String CLAIMS_NAMESPACE = "https://www.ujjwalmaletha.um/roles";
 
-    public static User map0auth2AttributesToUser(Map<String, Objects> attributes){
+    public static User map0auth2AttributesToUser(Map<String, Object> attributes){
         User user = new User();
         String sub = String.valueOf(attributes.get("sub"));
 
@@ -50,21 +50,14 @@ public class SecurityUtils {
             user.setImageUrl((attributes.get("picture")).toString());
         }
 
-        Object rawAuthorities = attributes.get(CLAIMS_NAMESPACE);
-        if (rawAuthorities instanceof List) {
-            List<?> authoritiesRaw = (List<?>) rawAuthorities;
-            List<String> stringAuthorities = authoritiesRaw.stream()
-                    .filter(item -> item instanceof String)
-                    .map(item -> (String) item)
-                    .collect(Collectors.toList());
-
-            Set<Authority> authorities = stringAuthorities.stream()
+        if(attributes.get(CLAIMS_NAMESPACE) != null) {
+            List<String> authoritiesRaw = (List<String>) attributes.get(CLAIMS_NAMESPACE);
+            Set<Authority> authorities = authoritiesRaw.stream()
                     .map(authority -> {
                         Authority auth = new Authority();
                         auth.setName(authority);
                         return auth;
-                    })
-                    .collect(Collectors.toSet());
+                    }).collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
 
