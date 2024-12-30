@@ -11,6 +11,5 @@ public record ListingInfoDTO(
         @NotNull @Valid GuestsVO guests,
         @NotNull @Valid BedroomsVO bedrooms,
         @NotNull @Valid BedsVO beds,
-        @NotNull @Valid BathsVO baths
-        ) {
+        @NotNull @Valid BathsVO baths) {
 }

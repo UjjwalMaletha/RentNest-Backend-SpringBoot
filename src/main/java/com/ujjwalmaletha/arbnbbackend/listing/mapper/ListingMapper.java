@@ -3,6 +3,7 @@ package com.ujjwalmaletha.arbnbbackend.listing.mapper;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.CreatedListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.SaveListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.Listing;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,6 +27,8 @@ public interface ListingMapper {
     @Mapping(target = "price", source = "price.value")
     Listing saveListingDTOToListing(SaveListingDTO saveListingDTO);
 
+
     CreatedListingDTO listingToCreatedListingDTO(Listing listing);
+
 
 }

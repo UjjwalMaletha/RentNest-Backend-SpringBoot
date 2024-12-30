@@ -5,6 +5,7 @@ import com.ujjwalmaletha.arbnbbackend.user.domain.Authority;
 import com.ujjwalmaletha.arbnbbackend.user.domain.User;
 import org.mapstruct.Mapper;
 
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 

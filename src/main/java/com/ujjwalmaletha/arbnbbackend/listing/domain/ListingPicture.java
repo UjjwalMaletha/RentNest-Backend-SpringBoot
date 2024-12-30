@@ -1,17 +1,12 @@
 package com.ujjwalmaletha.arbnbbackend.listing.domain;
 import com.ujjwalmaletha.arbnbbackend.sharedkernel.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
+import java.util.Arrays;
+import java.util.Objects;
+
 @Entity
 @Table(name = "listing_picture")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ListingPicture extends AbstractAuditingEntity<Long> {
 
     @Id
@@ -39,4 +34,62 @@ public class ListingPicture extends AbstractAuditingEntity<Long> {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Listing getListing() {
+        return listing;
+    }
+
+    public void setListing(Listing listing) {
+        this.listing = listing;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+
+    public boolean isCover() {
+        return isCover;
+    }
+
+    public void setCover(boolean cover) {
+        isCover = cover;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingPicture that = (ListingPicture) o;
+        return isCover == that.isCover && Objects.deepEquals(file, that.file) && Objects.equals(fileContentType, that.fileContentType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(file), fileContentType, isCover);
+    }
+
+    @Override
+    public String toString() {
+        return "ListingPicture{" +
+                "file=" + Arrays.toString(file) +
+                ", fileContentType='" + fileContentType + '\'' +
+                ", isCover=" + isCover +
+                '}';
+    }
 }
+

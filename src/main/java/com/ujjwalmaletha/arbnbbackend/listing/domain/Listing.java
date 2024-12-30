@@ -2,14 +2,18 @@ package com.ujjwalmaletha.arbnbbackend.listing.domain;
 
 import com.ujjwalmaletha.arbnbbackend.sharedkernel.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "listing")
+@Data
 public class Listing extends AbstractAuditingEntity<Long> {
 
     @Id
@@ -52,8 +56,38 @@ public class Listing extends AbstractAuditingEntity<Long> {
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.REMOVE)
     private Set<ListingPicture> pictures = new HashSet<>();
+
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Listing listing = (Listing) o;
+        return guests == listing.guests && bedrooms == listing.bedrooms && beds == listing.beds && bathrooms == listing.bathrooms && price == listing.price && Objects.equals(title, listing.title) && Objects.equals(description, listing.description) && bookingCategory == listing.bookingCategory && Objects.equals(location, listing.location) && Objects.equals(landlordPublicId, listing.landlordPublicId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, guests, bedrooms, beds, bathrooms, price, bookingCategory, location, landlordPublicId);
+    }
+
+    @Override
+    public String toString() {
+        return "Listing{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", guests=" + guests +
+                ", bedrooms=" + bedrooms +
+                ", beds=" + beds +
+                ", bathrooms=" + bathrooms +
+                ", price=" + price +
+                ", bookingCategory=" + bookingCategory +
+                ", location='" + location + '\'' +
+                ", landlordPublicId=" + landlordPublicId +
+                '}';
     }
 }
