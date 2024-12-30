@@ -10,9 +10,9 @@ spring:
   application:
     name: arbnbbackend
   datasource:
-    url: jdbc:mysql://localhost:3306/airbnb_clone?allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: Ujjwal
+    url: jdbc:postgresql://localhost:5432/airbnb_clone
+    username: postgres
+    password: ujjwal
 
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -25,12 +25,12 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   liquibase:
     contexts: dev
     change-log: classpath:db/changelog/master.xml
     default-schema: airbnb_clone
-    enabled: true
+    enabled: false
   #    drop-first: true
   servlet:
     multipart:

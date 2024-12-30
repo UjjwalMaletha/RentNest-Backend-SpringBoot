@@ -47,7 +47,9 @@ public class SecurityUtils {
         }
 
         if (attributes.get("picture") != null) {
+
             user.setImageUrl((attributes.get("picture")).toString());
+
         }
 
         if(attributes.get(CLAIMS_NAMESPACE) != null) {
@@ -73,6 +75,9 @@ public class SecurityUtils {
     }
 
     private static List<SimpleGrantedAuthority> mapRolesToGrantedAuthorities(Collection<String> roles) {
+        if (roles == null) { // Handle the null case appropriately, e.g., return an empty list return
+            Collections.emptyList();
+        }
         return roles.stream().filter(role -> role.startsWith("ROLE_")).map(SimpleGrantedAuthority::new).toList();
     }
 

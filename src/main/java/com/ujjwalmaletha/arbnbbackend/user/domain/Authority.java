@@ -3,25 +3,22 @@ package com.ujjwalmaletha.arbnbbackend.user.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "authority")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Authority implements Serializable {
 
+    @NotNull
+    @Size(max=50)
     @Id
     @Column(length = 50)
-    @NotNull
-    @Size(max = 50)
-    private  String name;
+    private String name;
 
     @Override
     public boolean equals(Object o) {
@@ -34,5 +31,12 @@ public class Authority implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
