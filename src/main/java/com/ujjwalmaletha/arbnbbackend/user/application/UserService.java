@@ -2,10 +2,12 @@ package com.ujjwalmaletha.arbnbbackend.user.application;
 
 import com.ujjwalmaletha.arbnbbackend.user.application.dto.ReadUserDTO;
 import com.ujjwalmaletha.arbnbbackend.user.domain.User;
-import com.ujjwalmaletha.arbnbbackend.infrastructure.config.SecurityUtils;
 import com.ujjwalmaletha.arbnbbackend.user.mapper.UserMapper;
+import com.ujjwalmaletha.arbnbbackend.infrastructure.config.SecurityUtils;
 import com.ujjwalmaletha.arbnbbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class UserService {
     private static final String UPDATED_AT_KEY = "updated_at";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
 
     @Transactional(readOnly = true)
     public ReadUserDTO getAuthenticatedUserFromSecurityContext() {

@@ -10,9 +10,6 @@ import com.ujjwalmaletha.arbnbbackend.user.application.UserService;
 import com.ujjwalmaletha.arbnbbackend.user.application.dto.ReadUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +17,11 @@ public class LandLordService {
 
 
     private final ListingRepository listingRepository;
-    private final ListingMapper listingMapper;
     private final UserService userService;
     private final Auth0Service auth0Service;
     private final PictureService pictureService;
+
+    private final ListingMapper listingMapper;
 
 
     public CreatedListingDTO create(SaveListingDTO saveListingDTO){
@@ -42,10 +40,4 @@ public class LandLordService {
         return listingMapper.listingToCreatedListingDTO(savedListing);
 
     }
-
-//    @Transactional(readOnly = true)
-//    public List<DisplayCardListingDTO> getAllProperties(ReadUserDTO landlord) {
-//        List<Listing> properties = listingRepository.findAllByLandlordPublicIdFetchCoverPicture(landlord.publicId());
-//        return listingMapper.listingToDisplayCardListingDTOs(properties);
-//    }
 }

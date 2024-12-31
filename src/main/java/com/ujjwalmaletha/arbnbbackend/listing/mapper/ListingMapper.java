@@ -28,6 +28,7 @@ public interface ListingMapper {
     Listing saveListingDTOToListing(SaveListingDTO saveListingDTO);
 
 
+
     CreatedListingDTO listingToCreatedListingDTO(Listing listing);
 
 
