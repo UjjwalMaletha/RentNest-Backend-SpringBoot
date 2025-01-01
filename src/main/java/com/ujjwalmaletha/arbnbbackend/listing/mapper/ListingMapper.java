@@ -3,6 +3,7 @@ package com.ujjwalmaletha.arbnbbackend.listing.mapper;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.CreatedListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayCardListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.SaveListingDTO;
+import com.ujjwalmaletha.arbnbbackend.listing.application.dto.vo.PriceVO;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.Listing;
 
 import org.mapstruct.Mapper;
@@ -38,5 +39,8 @@ public interface ListingMapper {
     @Mapping(target = "cover", source = "pictures", qualifiedByName = "extract-cover")
     DisplayCardListingDTO listingToDisplayCardListingDTO(Listing listing);
 
+    default PriceVO mapPriceToPriceVO(int price) {
+        return new PriceVO(price);
+    }
 
 }
