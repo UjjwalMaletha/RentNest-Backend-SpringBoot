@@ -2,6 +2,7 @@ package com.ujjwalmaletha.arbnbbackend.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,8 @@ public class SecurityConfiguration {
         requestAttributeHandler.setCsrfRequestAttributeName(null);
 
         httpSecurity.authorizeHttpRequests(authorize-> authorize
+                        .requestMatchers(HttpMethod.GET,"api/tenant-listing/get-all-by-category").permitAll()
+                        .requestMatchers(HttpMethod.GET,"assets/*").permitAll()
                 .anyRequest()
                 .authenticated())
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
