@@ -1,11 +1,14 @@
 package com.ujjwalmaletha.arbnbbackend.listing.mapper;
 
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.CreatedListingDTO;
+import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayCardListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.SaveListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.Listing;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring",uses = {ListingPictureMapper.class})
 public interface ListingMapper {
@@ -27,9 +30,13 @@ public interface ListingMapper {
     @Mapping(target = "price", source = "price.value")
     Listing saveListingDTOToListing(SaveListingDTO saveListingDTO);
 
-
-
     CreatedListingDTO listingToCreatedListingDTO(Listing listing);
+
+    @Mapping(target = "cover", source = "pictures")
+    List<DisplayCardListingDTO> listingToDisplayCardListingDTOs(List<Listing> listings);
+
+    @Mapping(target = "cover", source = "pictures", qualifiedByName = "extract-cover")
+    DisplayCardListingDTO listingToDisplayCardListingDTO(Listing listing);
 
 
 }
