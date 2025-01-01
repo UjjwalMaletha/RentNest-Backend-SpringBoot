@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ujjwalmaletha.arbnbbackend.infrastructure.config.SecurityUtils;
 import com.ujjwalmaletha.arbnbbackend.listing.application.LandLordService;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.CreatedListingDTO;
+import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayCardListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.SaveListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.sub.PictureDTO;
+import com.ujjwalmaletha.arbnbbackend.sharedkernel.service.State;
+import com.ujjwalmaletha.arbnbbackend.sharedkernel.service.StatusNotification;
 import com.ujjwalmaletha.arbnbbackend.user.application.UserException;
 import com.ujjwalmaletha.arbnbbackend.user.application.UserService;
 import com.ujjwalmaletha.arbnbbackend.user.application.dto.ReadUserDTO;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -75,13 +79,26 @@ public class LandlordResource {
         };
     }
 
-//    @GetMapping(value = "/get-all")
-//    @PreAuthorize("hasAnyRole('" + SecurityUtils.ROLE_LANDLORD + "')")
-//    public ResponseEntity<List<DisplayCardListingDTO>> getAll() {
-//        ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
-//        List<DisplayCardListingDTO> allProperties = landLordService.getAllProperties(connectedUser);
-//        return ResponseEntity.ok(allProperties);
-//    }
+    @GetMapping(value = "/get-all")
+    @PreAuthorize("hasAnyRole('" + SecurityUtils.ROLE_LANDLORD + "')")
+    public ResponseEntity<List<DisplayCardListingDTO>> getAll() {
+        ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
+        List<DisplayCardListingDTO> allProperties = landLordService.getAllProperties(connectedUser);
+        return ResponseEntity.ok(allProperties);
+    }
+
+    @DeleteMapping("/delete")
+    @PreAuthorize("hasAnyRole('" + SecurityUtils.ROLE_LANDLORD + "')")
+    public ResponseEntity<UUID> delete(@RequestParam UUID publicId) {
+        ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
+        State<UUID, String> deleteState = landLordService.delete(publicId, connectedUser);
+        if (deleteState.getStatus().equals(StatusNotification.OK)) {
+            return ResponseEntity.ok(deleteState.getValue());
+        } else if (deleteState.getStatus().equals(StatusNotification.UNAUTHORIZED)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 
 
 }
