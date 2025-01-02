@@ -2,6 +2,7 @@ package com.ujjwalmaletha.arbnbbackend.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,8 +17,11 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
+
 @Configuration
 @EnableWebSecurity
+@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class SecurityConfiguration {
 
 

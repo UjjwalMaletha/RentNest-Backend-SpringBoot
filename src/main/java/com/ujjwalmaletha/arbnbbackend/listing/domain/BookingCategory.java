@@ -1,14 +1,15 @@
 package com.ujjwalmaletha.arbnbbackend.listing.domain;
 
 public enum BookingCategory {
+
     ALL,
     AMAZING_VIEWS,
     OMG,
     TREEHOUSES,
-    BEACH,
+    BEACHES,
     FARMS,
     TINY_HOMES,
-    LAKE,
+    LAKES,
     CONTAINERS,
     CAMPING,
     CASTLE,
@@ -20,5 +21,7 @@ public enum BookingCategory {
     TOWER,
     CAVES,
     LUXES,
-    CHEFS_AND_KITCHEN
+    SKIING,
+    CAMPERS,
+    CHEFS_KITCHEN
 }
