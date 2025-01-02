@@ -33,6 +33,8 @@ public class SecurityConfiguration {
 
         httpSecurity.authorizeHttpRequests(authorize-> authorize
                         .requestMatchers(HttpMethod.GET,"api/tenant-listing/get-all-by-category").permitAll()
+                        .requestMatchers(HttpMethod.GET,"api/booking/check-availability").permitAll()
+                        .requestMatchers(HttpMethod.GET,"api/tenant-listing/get-one").permitAll()
                         .requestMatchers(HttpMethod.GET,"assets/*").permitAll()
                 .anyRequest()
                 .authenticated())

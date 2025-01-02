@@ -1,8 +1,6 @@
 package com.ujjwalmaletha.arbnbbackend.listing.mapper;
 
-import com.ujjwalmaletha.arbnbbackend.listing.application.dto.CreatedListingDTO;
-import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayCardListingDTO;
-import com.ujjwalmaletha.arbnbbackend.listing.application.dto.SaveListingDTO;
+import com.ujjwalmaletha.arbnbbackend.listing.application.dto.*;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.vo.PriceVO;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.Listing;
 
@@ -42,5 +40,19 @@ public interface ListingMapper {
     default PriceVO mapPriceToPriceVO(int price) {
         return new PriceVO(price);
     }
+
+    @Mapping(target = "landlord", ignore = true)
+    @Mapping(target = "description.title.value", source = "title")
+    @Mapping(target = "description.description.value", source = "description")
+    @Mapping(target = "infos.bedrooms.value", source = "bedrooms")
+    @Mapping(target = "infos.guests.value", source = "guests")
+    @Mapping(target = "infos.beds.value", source = "beds")
+    @Mapping(target = "infos.baths.value", source = "bathrooms")
+    @Mapping(target = "category", source = "bookingCategory")
+    @Mapping(target = "price.value", source = "price")
+    DisplayListingDTO listingToDisplayListingDTO(Listing listing);
+
+    @Mapping(target = "listingPublicId", source = "publicId")
+    ListingCreateBookingDTO mapListingToListingCreateBookingDTO(Listing listing);
 
 }

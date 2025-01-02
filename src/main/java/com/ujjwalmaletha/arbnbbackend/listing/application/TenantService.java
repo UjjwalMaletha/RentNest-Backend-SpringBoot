@@ -2,6 +2,7 @@ package com.ujjwalmaletha.arbnbbackend.listing.application;
 
 
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayCardListingDTO;
+import com.ujjwalmaletha.arbnbbackend.listing.application.dto.DisplayListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.application.dto.sub.LandlordListingDTO;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.BookingCategory;
 import com.ujjwalmaletha.arbnbbackend.listing.domain.Listing;
@@ -40,22 +41,22 @@ public class TenantService {
         return allOrBookingCategory.map(listingMapper::listingToDisplayCardListingDTO);
     }
 
-//    @Transactional(readOnly = true)
-//    public State<DisplayCardListingDTO, String> getOne(UUID publicId) {
-//        Optional<Listing> listingByPublicIdOpt = listingRepository.findByPublicId(publicId);
-//
-//        if (listingByPublicIdOpt.isEmpty()) {
-//            return State.<DisplayListingDTO, String>builder()
-//                    .forError(String.format("Listing doesn't exist for publicId: %s", publicId));
-//        }
-//
-//        DisplayListingDTO displayListingDTO = listingMapper.listingToDisplayListingDTO(listingByPublicIdOpt.get());
-//
-//        ReadUserDTO readUserDTO = userService.getByPublicId(listingByPublicIdOpt.get().getLandlordPublicId()).orElseThrow();
-//        LandlordListingDTO landlordListingDTO = new LandlordListingDTO(readUserDTO.firstName(), readUserDTO.imageUrl());
-//        displayListingDTO.setLandlord(landlordListingDTO);
-//
-//        return State.<DisplayListingDTO, String>builder().forSuccess(displayListingDTO);
-//    }
+    @Transactional(readOnly = true)
+    public State<DisplayListingDTO, String> getOne(UUID publicId) {
+        Optional<Listing> listingByPublicIdOpt = listingRepository.findByPublicId(publicId);
+
+        if (listingByPublicIdOpt.isEmpty()) {
+            return State.<DisplayListingDTO, String>builder()
+                    .forError(String.format("Listing doesn't exist for publicId: %s", publicId));
+        }
+
+        DisplayListingDTO displayListingDTO = listingMapper.listingToDisplayListingDTO(listingByPublicIdOpt.get());
+
+        ReadUserDTO readUserDTO = userService.getByPublicId(listingByPublicIdOpt.get().getLandlordPublicId()).orElseThrow();
+        LandlordListingDTO landlordListingDTO = new LandlordListingDTO(readUserDTO.firstName(), readUserDTO.imageUrl());
+        displayListingDTO.setLandlord(landlordListingDTO);
+
+        return State.<DisplayListingDTO, String>builder().forSuccess(displayListingDTO);
+    }
 
 }

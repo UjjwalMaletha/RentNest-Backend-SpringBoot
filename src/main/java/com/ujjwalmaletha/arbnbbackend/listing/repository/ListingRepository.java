@@ -36,4 +36,6 @@ public interface ListingRepository extends JpaRepository<Listing,Long> {
     Page<Listing> findAllByLocationAndBathroomsAndBedroomsAndGuestsAndBeds(
             Pageable pageable, String location, int bathrooms, int bedrooms, int guests, int beds
     );
+
+
 }
