@@ -10,9 +10,9 @@ spring:
   application:
     name: arbnbbackend
   datasource:
-    url: jdbc:postgresql://localhost:5432/airbnb_clone
-    username: postgres
-    password: ujjwal
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/airbnb_clone}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:ujjwal}
 
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -42,10 +42,10 @@ server:
 
 okta:
   oauth2:
-    issuer: https://dev-6f3vy7sf26wpcync.us.auth0.com/
-    client-id: LOfTPaIU9aRzB3CVCOiM8semOWwssW2I
-    client-secret: k2QmjaJ9LPpxS8pWWH3tp70qWc4mbOD2uas0Z_mxYFi6CSDgwugfjFqPq1UO6KM2
+    issuer: ${ISSUER:https://dev-6f3vy7sf26wpcync.us.auth0.com/}
+    client-id: ${AUTH0_CLIENT_ID:LOfTPaIU9aRzB3CVCOiM8semOWwssW2I}
+    client-secret: ${AUTH0_CLIENT_SECRET:k2QmjaJ9LPpxS8pWWH3tp70qWc4mbOD2uas0Z_mxYFi6CSDgwugfjFqPq1UO6KM2}
 
 application:
   auth0:
-    role-landlord-id: rol_HTo2RjZ517X52Li0
+    role-landlord-id: ${LANDLORD_ID:rol_HTo2RjZ517X52Li0}
